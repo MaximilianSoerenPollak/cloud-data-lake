@@ -1,1 +1,4 @@
 dl.conf
+__pycache__/
+dl.cfg
+temp/
