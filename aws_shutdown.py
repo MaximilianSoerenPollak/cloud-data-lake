@@ -1,6 +1,6 @@
 import configparser
-from aws_startup import s3
 from time import sleep
+import boto3
 
 # ----- CODE ----
 
@@ -9,9 +9,10 @@ config.read_file(open("dl.cfg"))
 
 # Delete the S3 bucket we created
 def delete_s3():
-    s3.delete_bucket(Bucket=config.get("AWS", "S3_BUCKET_NAME"))
-    sleep(5)
-    delete_s3()
+    s3 = boto3.resource("s3")
+    bucket = s3.Bucket(config.get("AWS", "S3_BUCKET_NAME"))
+    bucket.objects.all().delete()
+    # s3.delete_bucket(Bucket=config.get("AWS", "S3_BUCKET_NAME"))
 
 
 # Run all the functions if the script is called.
